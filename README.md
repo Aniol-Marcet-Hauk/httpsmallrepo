@@ -1,4 +1,4 @@
-# httpfinal
+# httpsmallrepo
 
 A small multithreaded HTTP server written in C.
 

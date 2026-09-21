@@ -5,7 +5,7 @@ A small multithreaded HTTP server written in C.
 
 ## Overview
 
-This project is a lightweight HTTP server that listens on port `4221` and handles a small set of routes. It supports:
+This project is a lightweight HTTP server that  handles a small set of routes. It supports:
 
 - `GET /`
 - `GET /echo/<text>`
@@ -14,8 +14,6 @@ This project is a lightweight HTTP server that listens on port `4221` and handle
 - `POST /files/<name>`
 
 It also supports persistent connections, `Connection: close`, basic file serving, request parsing, and gzip compression
-
-The code is split into smaller modules so the request parsing, request state, response state, and circular buffer logic are easier to work with.
 
 ## Motivation
 

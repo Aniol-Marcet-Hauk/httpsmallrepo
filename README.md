@@ -2,7 +2,8 @@
 
 A small multithreaded HTTP server written in C.
 
-## What this project is
+
+## Overview
 
 This project is a lightweight HTTP server that listens on port `4221` and handles a small set of routes. It supports:
 
@@ -12,11 +13,16 @@ This project is a lightweight HTTP server that listens on port `4221` and handle
 - `GET /files/<name>`
 - `POST /files/<name>`
 
-It also supports persistent connections, `Connection: close`, basic file serving, request parsing, and optional gzip response compression when the client accepts it.
+It also supports persistent connections, `Connection: close`, basic file serving, request parsing, and gzip compression
 
 The code is split into smaller modules so the request parsing, request state, response state, and circular buffer logic are easier to work with.
 
+## Motivation
 
+I originally wanted to make a small OS but it turns out that small OS are actually kind of big... So, since I was also interested in understanding http, I decided to do a http server, 
+
+I used beej's guide https://beej.us/guide/bgnet/b 
+and codecrafters http server in c course as a jumping off point.
 
 ## Build
 
@@ -31,24 +37,22 @@ gcc -Wall -Wextra -pthread http.c circularbuffer.c httprequestmap.c httpresponse
 Start the server with:
 
 ```sh
+./httpserver 
+```
+
+If you want to enable file routes and point them to a directory you want:
+
+```sh
 ./httpserver --directory temp
 ```
 
-The `--directory` argument enables file routes and points them at the directory you want to serve.
-
 ## Tests
 
+Run the server first
 
-
-Run tests with
+Then run tests with
 
 ```sh
 bash ./tests/run_tests.sh
 ```
 
-
-## Notes
-
-- The server listens on `4221`.
-- Requests are handled in separate threads.
-- The tests expect the server to already be running before you execute the test runner

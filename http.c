@@ -197,10 +197,10 @@ const char * connection_header_value(int connectionclose){
 }
 
 void set_basic_response(HttpResponseMap * response, const char * status, int connectionclose, const char * contenttype, const char * contentencoding){
-    http_response_map_set_status(response, status);
-    http_response_map_set_connection_close(response, connectionclose);
-    http_response_map_set_content_type(response, contenttype);
-    http_response_map_set_content_encoding(response, contentencoding);
+    http_response_map_copy_string(response->status_line, sizeof(response->status_line), status);
+    response->connection_close = connectionclose;
+    http_response_map_copy_string(response->content_type, sizeof(response->content_type), contenttype);
+    http_response_map_copy_string(response->content_encoding, sizeof(response->content_encoding), contentencoding);
 }
 
 int send_response_map(int fd, HttpResponseMap * response){
@@ -341,6 +341,8 @@ int handle_get_echo(HttpRequestMap * request, HttpResponseMap * response, const 
 int handle_get_file(HttpRequestMap * request, HttpResponseMap * response, const char* encodingoption){
    return send_file(request,response,encodingoption);
 }
+
+
 
 int POST_method(HttpRequestMap * request, HttpResponseMap * response, const char * encodingoption){
     (void)encodingoption;
@@ -483,6 +485,7 @@ int append_header_chunk(httpheaderrequest* request, const char * chunk, int chun
 int process_header_request(int thisfd,httpheaderrequest* request){
 
     //Probably should restructure this function
+    //it's a bit ugly and could be better structured
 
     clear_request(request);
     int bytesrecv = 0;
